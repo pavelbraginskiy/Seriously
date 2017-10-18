@@ -576,7 +576,32 @@ def full_factor(n):
 
 @memoize
 def factor(n):
-    return [a for a,b in full_factor(n)]
+        if n%2==0:
+                return 2
+        y,c,m = random.randint(1, n-1),random.randint(1, n-1),random.randint(1, n-1)
+        g,r,q = 1,1,1
+        while g==1:             
+                x = y
+                for i in range(r):
+                        y = ((y*y)%n+c)%n
+                k = 0
+                while (k<r and g==1):
+                        ys = y
+                        for i in range(min(m,r-k)):
+                                y = ((y*y)%n+c)%n
+                                q = q*(abs(x-y))%n
+                        g = gcd(q,N)
+                        k = k + m
+                r = r*2
+        if g==n:
+                while True:
+                        ys = ((ys*ys)%N+c)%N
+                        g = gcd(abs(x-ys),n)
+                        if g>1:
+                                break
+         
+        return g   
+    # return [a for a,b in full_factor(n)]
 
 @memoize
 def factor_with_multiplicity(n):
